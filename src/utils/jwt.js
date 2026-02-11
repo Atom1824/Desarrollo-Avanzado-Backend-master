@@ -1,6 +1,9 @@
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
-const PRIVATE_KEY = "coderSecret"; // usa .env si quieres
+dotenv.config();
+
+const PRIVATE_KEY = process.env.JWT_SECRET;
 
 export const generateToken = (user) => {
   return jwt.sign(
@@ -14,5 +17,6 @@ export const generateToken = (user) => {
   );
 };
 
-export const verifyToken = (token) =>
-  jwt.verify(token, PRIVATE_KEY);
+export const verifyToken = (token) => {
+  return jwt.verify(token, PRIVATE_KEY);
+};

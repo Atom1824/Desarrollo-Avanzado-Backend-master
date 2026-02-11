@@ -6,7 +6,6 @@ const router = Router();
 const ProductService = new productDBManager();
 const CartService = new cartDBManager(ProductService);
 
-// 🏠 HOME → muestra productos
 router.get('/', async (req, res) => {
     const products = await ProductService.getAllProducts(req.query);
 
@@ -25,7 +24,6 @@ router.get('/', async (req, res) => {
     });
 });
 
-// (opcional) /products sigue funcionando
 router.get('/products', async (req, res) => {
     const products = await ProductService.getAllProducts(req.query);
 
@@ -44,7 +42,6 @@ router.get('/products', async (req, res) => {
     });
 });
 
-// 🔴 realtime
 router.get('/realtimeproducts', async (req, res) => {
     const products = await ProductService.getAllProducts(req.query);
 
@@ -55,7 +52,6 @@ router.get('/realtimeproducts', async (req, res) => {
     });
 });
 
-// 🛒 carrito
 router.get('/cart/:cid', async (req, res) => {
     const response = await CartService.getProductsFromCartByID(req.params.cid);
 
@@ -73,7 +69,6 @@ router.get('/cart/:cid', async (req, res) => {
     });
 });
 
-// ❌ 404 FINAL
 router.get('*', (req, res) => {
     res.status(404).render('notFound', {
         title: 'Not Found',

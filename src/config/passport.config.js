@@ -1,9 +1,10 @@
 import passport from "passport";
 import jwt from "passport-jwt";
-import { UserModel } from "../models/user.model.js";
+import { userDBManager } from "../dao/userDBManager.js";
 
 const JWTStrategy = jwt.Strategy;
 const ExtractJWT = jwt.ExtractJwt;
+const UserService = new userDBManager();
 
 const cookieExtractor = (req) => {
   let token = null;
@@ -23,7 +24,7 @@ export const initializePassport = () => {
       },
       async (jwt_payload, done) => {
         try {
-          const user = await UserModel.findById(jwt_payload.id);
+          const user = await UserService.getUserByID(jwt_payload.id);
           if (!user) return done(null, false);
           return done(null, user);
         } catch (error) {
